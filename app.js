@@ -1,23 +1,24 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+//importing all the routing logic from admin file
+const adminRouter = require('./routes/admin');
+//importing all the routing logic from shop file
+const shopRouter = require('./routes/shop');
+
 const app = express();
 
 //to parse the input
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//middleware
-app.use('/add-product', (req, res, next) => {
-    res.send('<form action="/product" method="POST"><input type="text" name="title" placeholder="enter title"><input type="text" name="size" placeholder="enter size"><button type="submit">Add Product</button></form>');//used to send any response back to client
-})
-//middleware
-app.post('/product', (req, res, next) => {
-    console.log(req.body);
-    res.redirect('/');
-})
+//this will take adminRouter as a function and will filter out routes starting with /admin
+app.use('/admin',adminRouter);
 
-//middleware
-app.use('/', (req, res, next) => {
-    res.send('<h1>only / route</h1>');//used to send any response back to client
+//this will take adminRouter as a function and will filter out routes starting with /shop
+app.use('/shop',shopRouter);
+
+// routes with wrong url can be handled with status
+app.use((req, res, next) => {
+    res.status(404).send('<h1>404 page not found</h1>');
 })
 
 app.listen(3000);//creates server and listens to the response

@@ -1,3 +1,3 @@
 exports.getSuccess = (req, res, next) => {
-    res.render('success', { pageTitle: 'Data submitted' });
+    res.render('afterSuccess', { pageTitle: 'Data submitted' });
 };

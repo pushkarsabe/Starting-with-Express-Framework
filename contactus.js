@@ -13,5 +13,5 @@ exports.getAddContact = (req, res, next) => {
 exports.postAddContact = (req, res, next) => {
     contacts.push({ title: req.body.title });
     console.log(req.body);
-    res.redirect('/success');
+    res.redirect('/');
 }

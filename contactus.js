@@ -1,20 +1,17 @@
-const path = require('path');
+const contacts = [];
 
-const express = require('express');
+exports.getAddContact = (req, res, next) => {
+    res.render('contactus', {
+        pageTitle: 'Contact Us',
+        path: '/contact',
+        formsCSS: true,
+        productCSS: true,
+        activeAddProduct: true
+    });
+}
 
-const router = express.Router();
-//will get a path to the directory
-const rootDir = require('../util/path');
-
-// contactus => GET
-router.get('/contactus', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'contactus.html'));
-});
-
-// contactus => POST
-router.post('/contactus', (req, res, next) => {
+exports.postAddContact = (req, res, next) => {
+    contacts.push({ title: req.body.title });
     console.log(req.body);
     res.redirect('/success');
-});
-
-module.exports = router;
+}

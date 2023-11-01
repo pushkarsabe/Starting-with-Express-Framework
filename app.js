@@ -1,23 +1,27 @@
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const contactusRoutes = require('./routes/contactus');
-const successRoutes = require('./routes/success');
+const contactRoutes = require('./routes/contact');
+const errorController = require('./controllers/error');
+const successController = require('./controllers/success');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-//This is a built-in middleware function in Express. It serves static files and is based on serve-static.
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
-app.use(contactusRoutes);
-app.use(successRoutes);
+app.use(contactRoutes);
 
+app.use(successController.getSuccess);
+app.use(errorController.get404);
 
 app.listen(3000);

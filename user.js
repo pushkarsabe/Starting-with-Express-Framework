@@ -1,16 +1,16 @@
-const express = require('express');
+const Sequelize = require('sequelize');
 
-const router = express.Router();
+const sequelize = require('../util/database');
 
-const addUserCotroller = require('../controllers/addUser');
+const User = sequelize.define('user', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  name: Sequelize.STRING,
+  email: Sequelize.STRING
+});
 
-// post /user/add-user
-router.post('/add-user', addUserCotroller.postAddUsers);
-
-// post /user/add-user
-router.post('/get-users', addUserCotroller.getAllUsers);
-
-// post /user/add-user
-router.post('/delete-user/:id', addUserCotroller.deleteUser);
-
-module.exports = router;
+module.exports = User;
